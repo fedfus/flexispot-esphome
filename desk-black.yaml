@@ -2,7 +2,7 @@ substitutions:
   device_name: desk-black
   name: flexispot_ek5
   min_height: "73.6" # Min height + 0.1
-  max_height: "120.0" # Max height - 0.1
+  max_height: "126" # Max height - 0.1
 
 esphome:
   name: ${device_name}
@@ -21,7 +21,7 @@ logger:
 # Enable Home Assistant API
 api:
   encryption:
-    key: "CC4TGPXFGKK6mWURLiihtFvZMfOYVkOpkEtAFkWjohE="
+    key: !secret home_assistant_api_key
 
 wifi:
   ssid: !secret wifi_ssid
@@ -29,19 +29,22 @@ wifi:
 
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
-    ssid: "${device_name} Fallback Hotspot"
-    password: superstrongpassword
+    ssid: "Desk-Black Fallback Hotspot"
+    password: "superstrongpassword"
 
 captive_portal:
 
 ota:
-  - platform: esphome
+  platform: esphome
+
+web_server:
+  port: 80
 
 uart:
   id: desk_uart
   baud_rate: 9600
-  tx_pin: TX
-  rx_pin: RX
+  tx_pin: GPIO21
+  rx_pin: GPIO20
 
 sensor:
   - platform: wifi_signal
@@ -72,7 +75,7 @@ switch:
   - platform: gpio
     name: "Virtual Screen"
     pin:
-      number: GPIO2 #D0
+      number: GPIO4 #D2
       mode: OUTPUT
     restore_mode: ALWAYS_OFF
     internal: true
