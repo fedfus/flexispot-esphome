@@ -4,4 +4,4 @@
 /.esphome/
 /secrets.yaml
 /desk-black.yaml
-
+.DS_Store
